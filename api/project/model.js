@@ -13,6 +13,12 @@ async function createProject(project) {
     return newIdArray[0];     
 }
 
+async function createTask(task) {
+    const newId = (await db('tasks').insert(task));
+    const newIdArray =  (await  db('tasks').where('task_id', newId));
+    return newIdArray[0];     
+}
+
 async function getResources() {
     return (await db('resources'))
 }
@@ -25,9 +31,10 @@ async function getResourceByName(name) {
 async function getProjects() {
     return (await db('projects'))
 }
-// function getById(id) {
-//     Promise.resolve(`getById: ${id}`);
-// }
+
+async function getProjectById(id) {
+    return (await db('projects').where('project_id', id))
+}
 
 module.exports = { 
     getProjects,
@@ -35,4 +42,6 @@ module.exports = {
     getResourceByName,
     createResource,
     createProject,
+    getProjectById,
+    createTask,
 };
