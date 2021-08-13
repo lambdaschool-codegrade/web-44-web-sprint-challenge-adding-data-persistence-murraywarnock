@@ -25,7 +25,7 @@ server.use(express.json());
 //   next(); // There should be no next....
 // });  
 
-server.use("/api/project", projectRouter)
+server.use("/api", projectRouter)
 
 server.use('*', (req, res, next) => { //eslint-disable-line
   res.json({ api: 'up' });

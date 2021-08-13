@@ -2,18 +2,11 @@
 const router = require('express').Router()
 const Project = require('./model')
 
-router.get('/',(req, res, next) => {
-    Project.get(req.params.id)
+router.get('/projects',(req, res, next) => {
+    Project.getProjects()
     .then(result => {
-        res.status(200).json(result)
-    })
-    .catch(next)
-})
-
-router.get('/:id',(req, res, next) => {
-    Project.getById(req.params.id)
-    .then(result => {
-        res.status(200).json(result)
+        result.forEach(row => !row.project_completed ? row.project_completed = false : row.project_completed = true)
+        res.status(200).json(result);
     })
     .catch(next)
 })
