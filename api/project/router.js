@@ -1,6 +1,15 @@
 // build your `/api/projects` router here
 const router = require('express').Router()
+const { validateResource } = require('./middleware')
 const Project = require('./model')
+
+router.post('/resources', validateResource, (req, res, next) => {
+    Project.createResource(req.body)
+    .then(resource => {
+        res.status(201).json(resource);
+    })
+    .catch(next)
+})
 
 router.get('/resources',(req, res, next) => {
     Project.getResources()
@@ -13,7 +22,9 @@ router.get('/resources',(req, res, next) => {
 router.get('/projects',(req, res, next) => {
     Project.getProjects()
     .then(projects => {
-        projects.forEach(row => !row.project_completed ? row.project_completed = false : row.project_completed = true)
+        projects.forEach(row => !row.project_completed ? 
+            row.project_completed = false : 
+            row.project_completed = true)
         res.status(200).json(projects);
     })
     .catch(next)
@@ -21,7 +32,7 @@ router.get('/projects',(req, res, next) => {
 
 router.use((err, req, res, next) => { //eslint-disable-line
     res.status(500).json({
-        customMessage: 'something went wrong inside the projects router',
+        // customMessage: 'something went wrong inside the projects router',
         message: err.message,
         stack:err.stack,
     })
