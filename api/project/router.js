@@ -2,14 +2,22 @@
 const router = require('express').Router()
 const Project = require('./model')
 
-router.get('/projects',(req, res, next) => {
-    Project.getProjects()
-    .then(result => {
-        result.forEach(row => !row.project_completed ? row.project_completed = false : row.project_completed = true)
-        res.status(200).json(result);
+router.get('/resources',(req, res, next) => {
+    Project.getResources()
+    .then(resources => {
+        res.status(200).json(resources);
     })
     .catch(next)
 })
+
+router.get('/projects',(req, res, next) => {
+    Project.getProjects()
+    .then(projects => {
+        projects.forEach(row => !row.project_completed ? row.project_completed = false : row.project_completed = true)
+        res.status(200).json(projects);
+    })
+    .catch(next)
+});
 
 router.use((err, req, res, next) => { //eslint-disable-line
     res.status(500).json({
