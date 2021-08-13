@@ -52,6 +52,17 @@ router.post('/tasks', validateTask, (req, res, next) => {
     .catch(next)
 })
 
+router.get('/tasks', (req, res, next) => {
+    Project.getTasks()
+    .then(tasks => {
+        tasks.forEach(row => !row.task_completed ? 
+            row.task_completed = false : 
+            row.task_completed = true)
+        res.status(200).json(tasks);
+    })
+    .catch(next)
+});
+
 router.use((err, req, res, next) => { //eslint-disable-line
     res.status(err.status || 500).json({
         message: err.message,
