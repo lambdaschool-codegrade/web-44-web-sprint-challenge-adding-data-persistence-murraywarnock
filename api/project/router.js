@@ -19,7 +19,18 @@ router.get('/resources',(req, res, next) => {
     .catch(next)
 })
 
-router.get('/projects',(req, res, next) => {
+router.post('/projects', (req, res, next) => {
+    Project.createProject(req.body)
+    .then(newProject => {
+        !newProject.project_completed ?
+            newProject.project_completed = false :
+            newProject.project_completed = true;
+        res.status(201).json(newProject);
+    })
+    .catch(next)
+})
+
+router.get('/projects', (req, res, next) => {
     Project.getProjects()
     .then(projects => {
         projects.forEach(row => !row.project_completed ? 

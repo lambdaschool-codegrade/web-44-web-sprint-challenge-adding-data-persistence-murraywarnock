@@ -7,6 +7,12 @@ async function createResource(resource) {
     return newIdArray[0];     
 }
 
+async function createProject(project) {
+    const newId = (await db('projects').insert(project));
+    const newIdArray =  (await  db('projects').where('project_id', newId));
+    return newIdArray[0];     
+}
+
 async function getResources() {
     return (await db('resources'))
 }
@@ -28,4 +34,5 @@ module.exports = {
     getResources,
     getResourceByName,
     createResource,
+    createProject,
 };
