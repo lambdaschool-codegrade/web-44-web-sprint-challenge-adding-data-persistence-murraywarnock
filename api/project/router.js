@@ -32,7 +32,7 @@ router.get('/projects',(req, res, next) => {
 
 router.use((err, req, res, next) => { //eslint-disable-line
     res.status(500).json({
-        // customMessage: 'something went wrong inside the projects router',
+        customMessage: 'something went wrong inside the projects router',
         message: err.message,
         stack:err.stack,
     })

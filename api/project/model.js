@@ -2,11 +2,17 @@
 const db = require('../../data/dbConfig')
 
 async function createResource(resource) {
-    return (await db('resources').insert(resource))            
+    const newId = (await db('resources').insert(resource));
+    return (await  db('resources').where('resource_id', newId[0]));       
 }
 
 async function getResources() {
     return (await db('resources'))
+}
+
+async function getResourceByName(name) {
+    const dupeName = await db('resources').where('resource_name', name)
+    return dupeName
 }
 
 async function getProjects() {
@@ -19,5 +25,6 @@ async function getProjects() {
 module.exports = { 
     getProjects,
     getResources,
+    getResourceByName,
     createResource,
 };
