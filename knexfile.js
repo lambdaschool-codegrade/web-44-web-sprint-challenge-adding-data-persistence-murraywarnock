@@ -11,6 +11,13 @@ module.exports = {
     ...sharedConfig,
     connection: { filename: './data/lambda.db3' },
     seeds: { directory: './data/seeds' },
+    migrations: {
+      directory: './data/migrations'
+    },
+    pool: {
+      afterCreate: (conn, done) => {
+        conn.run('PRAGMA foreign_keys = ON', done)
+      }
   },
   testing: {
     ...sharedConfig,
