@@ -3,7 +3,8 @@ const db = require('../../data/dbConfig')
 
 async function createResource(resource) {
     const newId = (await db('resources').insert(resource));
-    return (await  db('resources').where('resource_id', newId[0]));       
+    const newIdArray =  (await  db('resources').where('resource_id', newId));
+    return newIdArray[0];     
 }
 
 async function getResources() {
