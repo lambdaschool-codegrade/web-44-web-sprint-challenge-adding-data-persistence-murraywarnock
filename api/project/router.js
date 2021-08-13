@@ -1,6 +1,6 @@
 // build your `/api/projects` router here
 const router = require('express').Router()
-const { validateResource } = require('./middleware')
+const { validateResource, validateProject } = require('./middleware')
 const Project = require('./model')
 
 router.post('/resources', validateResource, (req, res, next) => {
@@ -19,7 +19,7 @@ router.get('/resources',(req, res, next) => {
     .catch(next)
 })
 
-router.post('/projects', (req, res, next) => {
+router.post('/projects', validateProject, (req, res, next) => {
     Project.createProject(req.body)
     .then(newProject => {
         !newProject.project_completed ?
@@ -42,8 +42,7 @@ router.get('/projects', (req, res, next) => {
 });
 
 router.use((err, req, res, next) => { //eslint-disable-line
-    res.status(500).json({
-        customMessage: 'something went wrong inside the projects router',
+    res.status(err.status || 500).json({
         message: err.message,
         stack:err.stack,
     })
