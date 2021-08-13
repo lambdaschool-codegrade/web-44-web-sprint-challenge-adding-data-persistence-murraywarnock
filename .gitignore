@@ -123,3 +123,6 @@ dist
 
 # Databases
 test.db3
+
+# Environment
+.env
