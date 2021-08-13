@@ -10,6 +10,7 @@
     "down": "knex migrate:down",
     "latest": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
+    "migrate": "knex migrate:make build-tables",
     "seed": "knex seed:run"
   },
   "repository": {

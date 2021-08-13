@@ -1,25 +1,8 @@
-// build your `/api/projects` router here
 const router = require('express').Router()
-const { validateResource, validateProject, validateTask } = require('./middleware')
+const { validateProject } = require('./middleware')
 const Project = require('./model')
 
-router.post('/resources', validateResource, (req, res, next) => {
-    Project.createResource(req.body)
-    .then(resource => {
-        res.status(201).json(resource);
-    })
-    .catch(next)
-})
-
-router.get('/resources',(req, res, next) => {
-    Project.getResources()
-    .then(resources => {
-        res.status(200).json(resources);
-    })
-    .catch(next)
-})
-
-router.post('/projects', validateProject, (req, res, next) => {
+router.post('/', validateProject, (req, res, next) => {
     Project.createProject(req.body)
     .then(newProject => {
         !newProject.project_completed ?
@@ -30,35 +13,13 @@ router.post('/projects', validateProject, (req, res, next) => {
     .catch(next)
 })
 
-router.get('/projects', (req, res, next) => {
+router.get('/', (req, res, next) => {
     Project.getProjects()
     .then(projects => {
         projects.forEach(row => !row.project_completed ? 
             row.project_completed = false : 
             row.project_completed = true)
         res.status(200).json(projects);
-    })
-    .catch(next)
-});
-
-router.post('/tasks', validateTask, (req, res, next) => {
-    Project.createTask(req.body)
-    .then(newTask => {
-        !newTask.task_completed ?
-            newTask.task_completed = false :
-            newTask.task_completed = true;
-        res.status(201).json(newTask);
-    })
-    .catch(next)
-})
-
-router.get('/tasks', (req, res, next) => {
-    Project.getTasks()
-    .then(tasks => {
-        tasks.forEach(row => !row.task_completed ? 
-            row.task_completed = false : 
-            row.task_completed = true)
-        res.status(200).json(tasks);
     })
     .catch(next)
 });

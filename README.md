@@ -112,6 +112,19 @@ Build an API inside the `api` folder with endpoints for:
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
 1. Explain the difference between Relational Databases and SQL.
+
+Relational Databases are composed of of one or more tabular tables made up of rows and columns. Each table has one column that serves as a primary key, or unique identifier for a row. These keys may be used in other tables (as foreign keys) to create relationships between records in one table to records in another.
+
+Structured Query Language (SQL) is the ANSI standard syntax for extracting data from one or more tables in a Relational Database, employing the key relationships between them.
+
 2. Why do tables need a Primary Key?
+
+A Primary Key acts as a unique identifier for a table. It is necessary in each table in order to create unambiguous relationships between rows in different tables.
+
 3. What is the name given to a table column that references the Primary Key on another table?
+
+A Foreign Key column in one table contains Primary Key values from another table that describe a relationship between records in the two tables.
+
 4. What do we need in order to have a _many to many_ relationship between two tables?
+
+"Many to many" describes a relationship in which the values from one entity (table) have multiple relationships with another entity and vice versa. For example, one CUSTOMER may purchase many PRODUCTS, and one product may be purchased by many customers. That relationship can be described by an intermediary table (ORDERS, perhaps) that contains foreign key columns for both CUSTOMERS and PRODUCTS.
